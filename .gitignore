@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+*.egg
+
+# Virtual envs / tooling
+.venv/
+venv/
+.uv/
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+
+# Env / secrets
+.env
+.env.*
+*.key
+
+# verifiers / prime outputs
+outputs/
+results/
+.prime/
+configs/endpoints.toml
+wandb/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Data artifacts (regenerate procedurally; keep seeds in code)
+data/*.jsonl
+data/*.parquet

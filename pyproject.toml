@@ -1,0 +1,75 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "supersede"
+description = "An RL environment that trains LLM agents to act on the current valid fact and not on superseded, stale information across long multi-session interactions."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Vedant Patel", email = "vedant@vrin.cloud" },
+]
+maintainers = [
+    { name = "Vrin", email = "supersede@vrin.cloud" },
+]
+keywords = [
+    "reinforcement-learning",
+    "rl-environment",
+    "verifiers",
+    "llm",
+    "agent-memory",
+    "long-horizon",
+    "supersession",
+    "temporal-reasoning",
+    "evaluation",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Typing :: Typed",
+]
+dynamic = ["version"]
+dependencies = [
+    "pydantic>=2.7",
+    "typing-extensions>=4.10",
+]
+
+[project.optional-dependencies]
+env = [
+    "verifiers>=0.1.8",
+    "datasets>=3.0",
+]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+    "ruff>=0.6",
+]
+
+[project.urls]
+Homepage = "https://github.com/Vrin-cloud/supersede"
+Repository = "https://github.com/Vrin-cloud/supersede"
+
+[tool.hatch.version]
+path = "src/supersede/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/supersede"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
