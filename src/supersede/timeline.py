@@ -185,8 +185,9 @@ def generate_timeline(seed: int, config: TimelineConfig | None = None) -> Timeli
     stale_answers = q_values[:-1]
 
     # How many update events occur after the queried fact's final update.
+    # (Zero when the queried fact never changed, e.g. the static control.)
     final_msg = _statement(queried, q_pred, current_answer, update=True)
-    gap = len(sessions) - 1 - sessions.index(final_msg)
+    gap = (len(sessions) - 1 - sessions.index(final_msg)) if final_msg in sessions else 0
 
     query = (
         f"As of now, what is the value for: '{queried} {q_pred} ___'? "
