@@ -51,3 +51,15 @@ research paper/*.fdb_latexmk
 research paper/*.out
 research paper/*.toc
 research paper/*.synctex.gz
+
+# Kept local (not for the public repo): paper + exploratory trail
+research paper/
+scripts/eval_local.py
+scripts/eval_agentic.py
+scripts/sweep_updates.py
+scripts/probe_deletion.py
+scripts/eval_memory_ops.py
+scripts/sim_loop.py
+scripts/make_figures.py
+docs/findings/v0-incontext.md
+docs/findings/v0-agentic.md

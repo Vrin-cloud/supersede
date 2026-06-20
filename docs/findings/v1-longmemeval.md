@@ -1,7 +1,8 @@
-# v1 finding: the failure is real on LongMemEval (knowledge-update)
+# Finding: the failure is real on LongMemEval (knowledge-update)
 
-After three synthetic mechanisms all scored ~100% (see `v0-agentic.md`), we
-moved to real data. **LongMemEval** (Wu et al., ICLR 2025) tags 78 questions as
+Synthetic templated supersession is saturated (frontier models score ~100% with
+full history in context), so the failure must be measured on real data.
+**LongMemEval** (Wu et al., ICLR 2025) tags 78 questions as
 `knowledge-update`: a fact stated in one session is changed in a later one, and
 the correct answer is the current value. Real conversational text, genuine
 supersession. MIT-licensed; oracle variant (evidence sessions only).
