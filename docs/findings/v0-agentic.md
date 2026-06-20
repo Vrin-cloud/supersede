@@ -65,3 +65,19 @@ points straight at the contribution rather than away from it.
 
 > Status: v0 simple task is a negative result for the supersession hypothesis.
 > Next iteration implements indirect-update semantics and re-tests.
+
+## Update: deletion is also easy, because the memory mechanism is too forgiving
+
+A targeted DELETE-vs-REPLACE probe (retraction with no replacement, "unknown"
+is correct) was smoke-tested at n=2: the model scored correct on both,
+emitting "unknown" when the queried fact was retracted. Consistent with every
+prior iteration: single explicit supersession events are easy.
+
+Root cause identified: the agent's memory here is a **full-rewrite notes
+field**, so overwriting or removing a fact is trivial. Real agent memory is
+**append + retrieve** (store discrete memories, search top-k at query). That
+is where supersession actually fails: a superseded memory remains in the store
+and is retrieved unless the agent explicitly deletes it. The next iteration
+replaces the notes memory with a retrieval-based memory (add/search/delete
+tools), which is both the likely failure locus and the real StatefulToolEnv
+artifact.
