@@ -81,3 +81,22 @@ and is retrieved unless the agent explicitly deletes it. The next iteration
 replaces the notes memory with a retrieval-based memory (add/search/delete
 tools), which is both the likely failure locus and the real StatefulToolEnv
 artifact.
+
+## Update 2: retrieval-memory (ops-managed) is ALSO easy — synthetic data is the limiter
+
+Replaced the rewrite-notes memory with a realistic Mem0-style store: the agent
+issues add/delete operations per incoming fact, sees only subject-matched
+retrieved memories, never the full store. Final-store hygiene was inspected
+directly (see scripts/eval_memory_ops.py). Smoke n=3: STATIC and UPDATED both
+100% clean, 0% stale. The agent correctly deletes superseded entries.
+
+Three memory mechanisms tested (rewrite-notes, deletion/retraction,
+ops-managed retrieval); gpt-4.1-mini passes all on synthetic data. The common
+cause is the DATA, not the mechanism: templated facts, tiny stores, and exact
+subject-matched retrieval make every supersession trivial to detect and apply.
+
+**Decision:** stop synthetic probing. Ground the evaluation on a real
+multi-session dataset (LoCoMo / FAMA-Memora) where scale, paraphrase, and
+coreference are present. The literature reports the failure there; if it
+reproduces with our memory agent, we have the gap on trusted data. If it does
+not, that is itself a strong, publishable negative result.
