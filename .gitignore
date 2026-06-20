@@ -37,3 +37,6 @@ data/
 
 # Data artifacts (regenerate procedurally; keep seeds in code)
 *.parquet
+
+# venv
+.venv/
