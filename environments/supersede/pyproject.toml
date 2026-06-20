@@ -7,7 +7,6 @@ tags = ["multi-turn", "stateful", "memory", "agent", "train", "eval"]
 dependencies = [
     "verifiers>=0.1.8",
     "datasets>=3.0",
-    "supersede",
 ]
 
 [build-system]

@@ -28,19 +28,21 @@ supersession questions under bounded memory, while full-context saturates near
 
 ```bash
 prime env install supersede
-prime eval run supersede -m openai/gpt-4.1-mini \
-  -a '{"data_path": "data/longmemeval_oracle.json", "max_examples": 78}'
+# bounded memory (the failure regime)
+prime eval run supersede -m openai/gpt-4.1-mini -a '{"max_examples": 78}'
+# full-context upper bound (for the gap)
+prime eval run supersede -m openai/gpt-4.1-mini -a '{"full_context": true}'
 ```
 
-Arguments to `load_environment`:
+The environment auto-downloads the LongMemEval knowledge-update data
+(MIT license) on first run. Arguments to `load_environment`:
 
 | arg | default | meaning |
 | --- | --- | --- |
-| `data_path` | `None` | LongMemEval json; if omitted, uses synthetic timelines |
 | `question_type` | `knowledge-update` | LongMemEval subset |
 | `max_examples` | `None` | cap on tasks |
-| `budget` | `300` | character cap on the agent's notes memory |
-| `judge_model` | `None` | grade with an LLM judge instead of the programmatic matcher |
+| `budget` | `300` | character cap on the agent's notes memory (bounded mode) |
+| `full_context` | `False` | upper-bound mode: all sessions in context, single turn |
 
 ## Reward
 
