@@ -40,3 +40,14 @@ data/
 
 # venv
 .venv/
+
+# LaTeX build artifacts
+research paper/*.aux
+research paper/*.log
+research paper/*.bbl
+research paper/*.blg
+research paper/*.fls
+research paper/*.fdb_latexmk
+research paper/*.out
+research paper/*.toc
+research paper/*.synctex.gz
