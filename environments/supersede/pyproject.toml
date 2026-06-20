@@ -1,0 +1,22 @@
+[project]
+name = "supersede"
+description = "Bounded-memory supersession environment: train/eval agents to use the current fact, not the stale one, across long multi-session interactions."
+version = "0.1.0"
+requires-python = ">=3.11"
+tags = ["multi-turn", "stateful", "memory", "agent", "train", "eval"]
+dependencies = [
+    "verifiers>=0.1.8",
+    "datasets>=3.0",
+    "supersede",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+include = ["supersede.py", "pyproject.toml"]
+
+[tool.verifiers.eval]
+num_examples = 20
+rollouts_per_example = 3

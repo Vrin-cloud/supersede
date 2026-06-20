@@ -9,7 +9,9 @@ from __future__ import annotations
 
 __version__ = "0.0.1"
 
+from supersede.env import load_environment
 from supersede.models import Fact
+from supersede.rollout import MemoryRollout
 from supersede.temporal import (
     FactConflict,
     batch_detect_conflicts,
@@ -20,8 +22,10 @@ from supersede.temporal import (
 __all__ = [
     "Fact",
     "FactConflict",
+    "MemoryRollout",
     "batch_detect_conflicts",
     "detect_conflict",
+    "load_environment",
     "select_valid_at",
     "__version__",
 ]

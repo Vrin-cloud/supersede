@@ -49,9 +49,29 @@ pytest
 src/supersede/
   models.py      # minimal bi-temporal Fact (subject, predicate, object, validity, supersession)
   temporal.py    # conflict detection + supersession (ported from Engram/Vrin)
-tests/
-  test_temporal.py
+  timeline.py    # synthetic fact-mutation timeline generator (ablation source)
+  rollout.py     # framework-agnostic bounded-memory rollout state machine
+  reward.py      # answer matching + answered_current / stale_penalty rewards
+  dataset.py     # LongMemEval + synthetic task loaders
+  env.py         # verifiers MultiTurnEnv wrapper (load_environment)
+environments/supersede/   # Environments Hub package (prime env push)
+scripts/         # eval harnesses (LongMemEval, agentic, sweeps)
+docs/findings/   # the empirical results, with caveats
+tests/           # offline tests (temporal, rollout, reward) -- 21 passing
 ```
+
+## The result so far
+
+On LongMemEval `knowledge-update`, bounded memory vs full context, n=78:
+
+| Model | Full-context | Bounded memory |
+| --- | --- | --- |
+| gpt-4.1-mini | 82% | 63% |
+| gpt-4.1 | 91% | 64% |
+| gpt-5.4 | 92% | 77% |
+
+Even the frontier model loses 15 points (paired McNemar p=0.0033); the gap is
+memory maintenance, not comprehension. This environment exists to close it.
 
 The temporal core is independent of the environment and can be imported on its
 own:
