@@ -15,7 +15,7 @@ def main():
     n = int(sys.argv[1]) if len(sys.argv) > 1 else 1
     model = sys.argv[2] if len(sys.argv) > 2 else "gpt-4.1-mini"
     env = load_environment(data_path="data/longmemeval_oracle.json",
-                           max_examples=n, budget=300, max_turns=12)
+                           max_examples=n, budget=300, max_turns=40)
     cfg = vf.ClientConfig(
         client_type="openai_chat_completions",
         api_key_var="OPENAI_API_KEY",

@@ -74,8 +74,8 @@ def load_environment(
         info["budget"] = budget
         info["question"] = t["question"]   # carry the query reliably via info
         rows.append({
-            "question": t["question"],
-            "answer": t["answer"],
+            "question": str(t["question"]),
+            "answer": str(t["answer"]),
             "info": json.dumps(info),
         })
     dataset = Dataset.from_list(rows)

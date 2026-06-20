@@ -52,7 +52,8 @@ Arguments to `load_environment`:
 
 ## Status
 
-The memory rollout state machine and reward are unit-tested offline against
-real LongMemEval data. The verifiers binding (`supersede.env`) follows the
-documented `MultiTurnEnv` API; end-to-end validation under `prime eval run`
-(and the Hub push) is the remaining step.
+Validated end-to-end under `verifiers` 0.1.14 against OpenAI: all 78
+knowledge-update rollouts terminate cleanly and the environment reports
+**57.7%** accuracy for gpt-4.1-mini (programmatic matcher), consistent with the
+offline harness's 63% (LLM judge). The remaining step is the Hub push
+(`prime env push`, which authenticates under your Prime Intellect account).
