@@ -32,6 +32,8 @@ wandb/
 .idea/
 .vscode/
 
+# External datasets (re-downloadable; see scripts/ for fetch commands)
+data/
+
 # Data artifacts (regenerate procedurally; keep seeds in code)
-data/*.jsonl
-data/*.parquet
+*.parquet
