@@ -58,6 +58,28 @@ JUDGE = (
 )
 
 
+def _is_reasoning(model: str) -> bool:
+    return model.startswith(("gpt-5", "o1", "o3", "o4"))
+
+
+def complete(client, model, messages, max_out, reasoning="low"):
+    """Chat completion that works for both GPT-4.x and GPT-5 reasoning models.
+
+    GPT-5 models reject ``temperature`` and use ``max_completion_tokens``
+    (which also covers reasoning tokens), so we give headroom and set a low
+    reasoning effort. GPT-4.x uses ``max_tokens`` + ``temperature=0``.
+    """
+    kw = dict(model=model, messages=messages)
+    if _is_reasoning(model):
+        kw["max_completion_tokens"] = max(max_out, 2048)
+        kw["reasoning_effort"] = reasoning
+    else:
+        kw["max_tokens"] = max_out
+        kw["temperature"] = 0
+    r = client.chat.completions.create(**kw)
+    return (r.choices[0].message.content or "").strip()
+
+
 def session_text(session: list[dict]) -> str:
     return "\n".join(f"{t['role']}: {t['content']}" for t in session)
 
@@ -68,33 +90,26 @@ def run_notes(client, model, sessions, question, budget):
     for s in sessions:
         user = (f"CURRENT NOTES:\n{notes or '(empty)'}\n\nNEW SESSION:\n"
                 f"{session_text(s)}\n\nRewrite your complete notes (max {budget} chars).")
-        r = client.chat.completions.create(
-            model=model, temperature=0, max_tokens=500,
-            messages=[{"role": "system", "content": sysmsg},
-                      {"role": "user", "content": user}])
-        notes = (r.choices[0].message.content or "").strip()[:budget]
-    a = client.chat.completions.create(
-        model=model, temperature=0, max_tokens=80,
-        messages=[{"role": "system", "content": ANSWER_FROM_NOTES},
-                  {"role": "user", "content": f"NOTES:\n{notes}\n\nQuestion: {question}"}])
-    return (a.choices[0].message.content or "").strip()
+        notes = complete(client, model, max_out=500, messages=[
+            {"role": "system", "content": sysmsg},
+            {"role": "user", "content": user}])[:budget]
+    return complete(client, model, max_out=80, messages=[
+        {"role": "system", "content": ANSWER_FROM_NOTES},
+        {"role": "user", "content": f"NOTES:\n{notes}\n\nQuestion: {question}"}])
 
 
 def run_fullcontext(client, model, sessions, question):
     blocks = "\n\n".join(f"[Session {i + 1}]\n{session_text(s)}"
                          for i, s in enumerate(sessions))
-    a = client.chat.completions.create(
-        model=model, temperature=0, max_tokens=80,
-        messages=[{"role": "system", "content": ANSWER_FULL},
-                  {"role": "user", "content": f"{blocks}\n\nQuestion: {question}"}])
-    return (a.choices[0].message.content or "").strip()
+    return complete(client, model, max_out=80, messages=[
+        {"role": "system", "content": ANSWER_FULL},
+        {"role": "user", "content": f"{blocks}\n\nQuestion: {question}"}])
 
 
 def judge(client, model, q, gold, ans):
-    r = client.chat.completions.create(
-        model=model, temperature=0, max_tokens=2,
-        messages=[{"role": "user", "content": JUDGE.format(q=q, gold=gold, ans=ans)}])
-    return (r.choices[0].message.content or "").strip().lower().startswith("y")
+    out = complete(client, model, max_out=4, messages=[
+        {"role": "user", "content": JUDGE.format(q=q, gold=gold, ans=ans)}])
+    return out.lower().startswith("y")
 
 
 def main():

@@ -36,6 +36,27 @@ Two things the synthetic study never showed:
    answers *"you haven't mentioned any"* -- the fact was dropped during
    compression.
 
+## Holds on the frontier (gpt-5.4)
+
+Same 78 questions, three models, two conditions:
+
+| Model | Full-context | Bounded memory | Gap | Paired McNemar |
+| --- | --- | --- | --- | --- |
+| gpt-4.1-mini | 82% | 63% | 19 | p = 0.0035 |
+| gpt-4.1 | 91% | 64% | 27 | — |
+| **gpt-5.4 (frontier)** | **92%** | **77%** | **15** | **p = 0.0033** |
+
+The bounded-memory gap is statistically significant on both the small model
+and the frontier model. Scaling the model helps memory *somewhat* (63% -> 77%
+across the family) but does **not** close the gap: gpt-5.4 still loses 15
+points and fails ~23% of supersession questions under bounded memory, dropping
+or garbling the updated fact (e.g. "Where did Rachel move to?" -> "no
+information about Rachel"). Full-context accuracy, by contrast, saturates near
+92%, so the bottleneck is memory maintenance, not reading comprehension.
+
+The honest framing is therefore "scaling helps but leaves a significant,
+frontier-level supersession failure," not "scaling does nothing."
+
 ### Caveats
 
 - LLM-judge grading introduces some noise: a few of the 19 memory failures are
