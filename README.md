@@ -6,6 +6,8 @@
 
 by **Vedant Patel** · [vrin.cloud](https://vrin.cloud) · [vedant@vrin.cloud](mailto:vedant@vrin.cloud)
 
+[![Paper (PDF)](https://img.shields.io/badge/paper-PDF-b31b1b.svg)](https://www.vrin.cloud/supersede.pdf)
+[![Prime Intellect Hub](https://img.shields.io/badge/Prime%20Intellect-Environments%20Hub-6E56CF)](https://app.primeintellect.ai/dashboard/environments/vedant/supersede)
 [![CI](https://github.com/Vrin-cloud/supersede/actions/workflows/ci.yml/badge.svg)](https://github.com/Vrin-cloud/supersede/actions/workflows/ci.yml)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org/)
 [![License: Apache 2.0](https://img.shields.io/badge/license-Apache--2.0-green)](LICENSE)
