@@ -38,13 +38,12 @@ def test_full_protocol_turn_count_is_sessions_plus_one():
     ro = MemoryRollout(sessions=sessions, question="Q?", budget=50)
     turns = 0
     # simulate a stub model that just emits placeholder text each turn
-    prompt = ro.current_prompt()
+    ro.current_prompt()  # exercise the initial prompt path
     while True:
         turns += 1
         nxt = ro.step(f"reply {turns}")
         if nxt is None:
             break
-        prompt = nxt
     assert turns == len(sessions) + 1     # 5 memory writes + 1 answer
     assert ro.final_answer == f"reply {turns}"
 

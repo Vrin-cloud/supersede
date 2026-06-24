@@ -1,0 +1,27 @@
+name: Bug report
+description: Something doesn't work as expected
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal repro
+      description: The smallest command / snippet that reproduces it.
+      render: shell
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      description: OS, Python version, supersede + verifiers versions.
+      placeholder: "macOS 14, Python 3.11, supersede 0.x, verifiers 0.1.x"
+    validations:
+      required: false

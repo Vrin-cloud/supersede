@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use Supersede, please cite it."
+title: "Supersede: Diagnosing and Training Memory-Consistent Agents under Fact Supersession"
+authors:
+  - family-names: Patel
+    given-names: Vedant
+    email: vedant@vrin.cloud
+    affiliation: Vrin
+year: 2026
+url: "https://github.com/Vrin-cloud/supersede"
+repository-code: "https://github.com/Vrin-cloud/supersede"
+license: Apache-2.0
+keywords:
+  - reinforcement-learning
+  - rl-environment
+  - verifiers
+  - agent-memory
+  - supersession
+  - temporal-reasoning

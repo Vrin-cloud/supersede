@@ -63,3 +63,13 @@ scripts/sim_loop.py
 scripts/make_figures.py
 docs/findings/v0-incontext.md
 docs/findings/v0-agentic.md
+
+# AWS infra configs (account-specific; keep local)
+aws/
+
+# In-progress training infra (local until results)
+training/
+src/supersede/training.py
+
+# Marketing/launch drafts (private until published)
+to-publish/

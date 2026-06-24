@@ -23,13 +23,13 @@ import os
 import sys
 
 from supersede.dataset import load_longmemeval, synthetic_tasks
+from supersede.reward import answer_matches
+from supersede.rollout import MemoryRollout
 
 
 def _dbg(*a):
     if os.environ.get("SUPERSEDE_DEBUG"):
         print("[supersede]", *a, file=sys.stderr, flush=True)
-from supersede.reward import answer_matches
-from supersede.rollout import MemoryRollout
 
 
 def _build_tasks(data_path, question_type, max_examples, synthetic_n):
