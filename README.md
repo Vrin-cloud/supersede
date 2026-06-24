@@ -8,6 +8,7 @@ by **Vedant Patel** · [vrin.cloud](https://vrin.cloud) · [vedant@vrin.cloud](m
 
 [![Paper (PDF)](https://img.shields.io/badge/paper-PDF-b31b1b.svg)](https://www.vrin.cloud/supersede.pdf)
 [![Prime Intellect Hub](https://img.shields.io/badge/Prime%20Intellect-Environments%20Hub-6E56CF)](https://app.primeintellect.ai/dashboard/environments/vedant/supersede)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20837384.svg)](https://doi.org/10.5281/zenodo.20837384)
 [![CI](https://github.com/Vrin-cloud/supersede/actions/workflows/ci.yml/badge.svg)](https://github.com/Vrin-cloud/supersede/actions/workflows/ci.yml)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org/)
 [![License: Apache 2.0](https://img.shields.io/badge/license-Apache--2.0-green)](LICENSE)
@@ -175,6 +176,8 @@ results, and reward refinements especially. See
   title  = {Supersede: Diagnosing and Training the Memory-Update Gap in LLM Agents},
   author = {Patel, Vedant},
   year   = {2026},
+  doi    = {10.5281/zenodo.20837384},
+  url    = {https://doi.org/10.5281/zenodo.20837384},
   note   = {Vrin. https://github.com/Vrin-cloud/supersede}
 }
 ```
