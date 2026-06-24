@@ -4,6 +4,8 @@
 
 **An RL environment that trains LLM agents to use the *current* fact, not the *stale* one.**
 
+by **Vedant Patel** · [vrin.cloud](https://vrin.cloud) · [vedant@vrin.cloud](mailto:vedant@vrin.cloud)
+
 [![CI](https://github.com/Vrin-cloud/supersede/actions/workflows/ci.yml/badge.svg)](https://github.com/Vrin-cloud/supersede/actions/workflows/ci.yml)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org/)
 [![License: Apache 2.0](https://img.shields.io/badge/license-Apache--2.0-green)](LICENSE)
@@ -180,7 +182,7 @@ results, and reward refinements especially. See
 - **Questions / ideas:** [GitHub Discussions](https://github.com/Vrin-cloud/supersede/discussions)
 - **Bugs:** [open an issue](https://github.com/Vrin-cloud/supersede/issues)
 - **Security:** see [SECURITY.md](SECURITY.md)
-- **Email:** supersede@vrin.cloud · **Author:** Vedant Patel ([vedant@vrin.cloud](mailto:vedant@vrin.cloud), [vrin.cloud](https://vrin.cloud))
+- **Email:** [vedant@vrin.cloud](mailto:vedant@vrin.cloud) — Vedant Patel ([vrin.cloud](https://vrin.cloud))
 - **Social:** [X / Twitter](https://x.com/Vedant7129) · [LinkedIn](https://www.linkedin.com/in/vedant1033/)
 
 ## License & acknowledgements

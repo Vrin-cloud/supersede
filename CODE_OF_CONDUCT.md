@@ -6,5 +6,5 @@ This project adopts the [Contributor Covenant](https://www.contributor-covenant.
 In short: be respectful, assume good faith, and keep discussion focused on the
 work. Harassment or exclusionary behavior is not tolerated.
 
-Report unacceptable behavior privately to **supersede@vrin.cloud**. Reports are
+Report unacceptable behavior privately to **vedant@vrin.cloud**. Reports are
 handled confidentially.

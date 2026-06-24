@@ -13,7 +13,7 @@ authors = [
     { name = "Vedant Patel", email = "vedant@vrin.cloud" },
 ]
 maintainers = [
-    { name = "Vrin", email = "supersede@vrin.cloud" },
+    { name = "Vedant Patel", email = "vedant@vrin.cloud" },
 ]
 keywords = [
     "reinforcement-learning",

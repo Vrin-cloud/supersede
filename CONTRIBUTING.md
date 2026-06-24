@@ -35,5 +35,5 @@ label.
 ## Questions
 
 Open a [Discussion](https://github.com/Vrin-cloud/supersede/discussions) or email
-`supersede@vrin.cloud`. By contributing you agree your work is licensed under
+`vedant@vrin.cloud`. By contributing you agree your work is licensed under
 Apache-2.0.
