@@ -73,3 +73,7 @@ src/supersede/training.py
 
 # Marketing/launch drafts (private until published)
 to-publish/
+
+# env-local dev cruft
+environments/*/logs/
+environments/*/uv.lock
