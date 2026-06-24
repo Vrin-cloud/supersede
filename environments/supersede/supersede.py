@@ -304,16 +304,19 @@ def load_environment(
     dataset = Dataset.from_list(rows)
 
     class SupersedeMemoryEnv(MultiTurnEnv):
-        async def setup_state(self, state) -> None:
+        async def setup_state(self, state):
+            # verifiers' rollout reassigns: `state = await self.setup_state(state)`,
+            # so this MUST return state (returning None crashes downstream stops).
             info = state.get("info")
             info = json.loads(info) if isinstance(info, str) else (info or {})
             state["rollout"] = _Rollout(list(info["sessions"]),
                                         info.get("question", ""),
                                         int(info.get("budget", budget)))
+            return state
 
         def _view(self, ro):
-            return [vf.SystemMessage(content=ro.system_prompt()),
-                    vf.UserMessage(content=ro.current_prompt())]
+            return [{"role": "system", "content": ro.system_prompt()},
+                    {"role": "user", "content": ro.current_prompt()}]
 
         async def get_prompt_messages(self, state):
             ro = state["rollout"]
@@ -338,7 +341,7 @@ def load_environment(
             if ro.step(last) is None:
                 state["final_env_response"] = []
                 return []
-            return [vf.UserMessage(content=ro.current_prompt())]
+            return [{"role": "user", "content": ro.current_prompt()}]
 
         @vf.stop
         async def rollout_done(self, state) -> bool:

@@ -105,4 +105,12 @@ Built on [LongMemEval](https://github.com/xiaowu0162/LongMemEval) (Wu et al.) an
 ```
 
 ## Evaluation Reports
-<!-- Keep this section intact so saved eval reports auto-render here. -->
+
+Reproduced with this environment (default bounded-memory mode):
+
+| Model | Mode | n × r | Mean reward (`answered_current`) |
+| --- | --- | --- | --- |
+| gpt-4.1-mini | bounded memory | 20 × 3 | **0.633** |
+
+Repro: `uv run vf-eval supersede -m gpt-4.1-mini -n 20 -r 3` — consistent with the
+63% bounded-memory figure in [Results](#results). Future saved eval runs render here.

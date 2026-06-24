@@ -1,0 +1,43 @@
+2026-06-23 22:41:07 - verifiers.workers.server.env_server.ZMQEnvServer - INFO - Initializing ZMQEnvServer to serve supersede (env_args={}, extra_env_kwargs={})
+2026-06-23 22:41:07 - verifiers.workers.server.env_server.ZMQEnvServer - INFO - Loading environment supersede with env_args={}
+2026-06-23 22:41:07 - verifiers.utils.env_utils - INFO - Loading environment: supersede
+2026-06-23 22:41:07 - verifiers.utils.env_utils - INFO - Using default args: full_context=False, n_train=2000, question_type='knowledge-update', max_examples=None, budget=300, max_sessions=8, min_sessions=6, max_turns=60, mode='eval'
+2026-06-23 22:41:07 - verifiers.utils.env_utils - INFO - Successfully loaded environment 'supersede'
+2026-06-23 22:41:07 - verifiers.workers.server.env_server.ZMQEnvServer - INFO - ZMQEnvServer started on tcp://127.0.0.1:64057
+2026-06-23 22:41:08 - verifiers.workers.server.env_server.ZMQEnvServer - ERROR - Error processing request 6ea64da669424081a1ae7121f973c4cc: 'NoneType' object has no attribute 'get'
+Traceback (most recent call last):
+  File "/Users/Vedant/Documents/supersede/environments/supersede/.venv/lib/python3.13/site-packages/verifiers/workers/server/zmq_env_server.py", line 116, in _process_request
+    response = await self._handle_run_group(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/Vedant/Documents/supersede/environments/supersede/.venv/lib/python3.13/site-packages/verifiers/workers/server/env_server.py", line 119, in _handle_run_group
+    outputs = await self.env.run_group(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "/Users/Vedant/Documents/supersede/environments/supersede/.venv/lib/python3.13/site-packages/verifiers/envs/environment.py", line 952, in run_group
+    group_states = await maybe_retry(
+                   ^^^^^^^^^^^^^^^^^^
+        run_group_attempt, max_retries=max_retries
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )()
+    ^^^
+  File "/Users/Vedant/Documents/supersede/environments/supersede/.venv/lib/python3.13/site-packages/verifiers/envs/environment.py", line 943, in run_group_attempt
+    group_states = await asyncio.gather(*rollout_tasks)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/Vedant/Documents/supersede/environments/supersede/.venv/lib/python3.13/site-packages/verifiers/envs/multiturn_env.py", line 144, in rollout
+    while not await self.is_completed(state):
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/Vedant/Documents/supersede/environments/supersede/.venv/lib/python3.13/site-packages/verifiers/envs/environment.py", line 833, in is_completed
+    if await self._render_stop(state, condition):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/Vedant/Documents/supersede/environments/supersede/.venv/lib/python3.13/site-packages/verifiers/envs/environment.py", line 810, in _render_stop
+    if await condition(state):
+       ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/Vedant/Documents/supersede/environments/supersede/.venv/lib/python3.13/site-packages/verifiers/envs/multiturn_env.py", line 54, in has_error
+    return state.get("error") is not None
+           ^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+2026-06-23 22:41:08 - verifiers.workers.server.env_server.ZMQEnvServer - INFO - Received signal SIGTERM, initiating graceful shutdown
+2026-06-23 22:41:09 - verifiers.workers.server.env_server.ZMQEnvServer - INFO - Stop event received, shutting down gracefully
+2026-06-23 22:41:09 - verifiers.workers.server.env_server.ZMQEnvServer - INFO - Environment server shut down
