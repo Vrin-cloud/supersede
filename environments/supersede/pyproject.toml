@@ -1,9 +1,11 @@
 [project]
 name = "supersede"
 description = "Bounded-memory supersession environment: train/eval agents to use the current fact, not the stale one, across long multi-session interactions."
-version = "0.1.0"
+version = "0.2.0"
 requires-python = ">=3.11"
-tags = ["multi-turn", "stateful", "memory", "agent", "train", "eval"]
+license = "Apache-2.0"
+authors = [{ name = "Vedant Patel", email = "vedant@vrin.cloud" }]
+tags = ["multi-turn", "memory", "long-horizon", "qa", "train", "eval"]
 dependencies = [
     "verifiers>=0.1.8",
     "datasets>=3.0",

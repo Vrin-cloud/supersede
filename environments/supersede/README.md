@@ -1,61 +1,108 @@
 # supersede
 
-**Train and evaluate agents to use the *current* fact, not the *stale* one.**
+*An RL environment that trains LLM agents to use the **current** fact, not the
+**stale** one, across long multi-session interactions.*
+*by **Vedant Patel** · [vedant@vrin.cloud](mailto:vedant@vrin.cloud) · [GitHub](https://github.com/Vrin-cloud/supersede)*
 
-A bounded-memory environment over multi-session interactions: the agent sees one
-session at a time and maintains a capped notes memory (it never re-sees raw
-sessions), then must answer a question using the current value of a fact that
-was updated along the way.
+### Overview
+- **Environment ID**: `supersede`
+- **Short description**: A bounded-memory, multi-session environment where facts
+  are superseded over time. The agent sees one session at a time and maintains a
+  capped notes memory — it **never re-sees raw sessions** — then answers a query
+  using the *current* value of a fact that changed along the way. The reward is
+  **temporal fact-currency**, which (to our knowledge) no other trainable
+  environment targets.
+- **Tags**: `multi-turn`, `memory`, `long-horizon`, `qa`, `train`, `eval`
 
-## The failure it targets
+### Datasets
+- **Primary dataset**: LongMemEval `knowledge-update` subset (real conversational
+  supersession) — [repo](https://github.com/xiaowu0162/LongMemEval), MIT license,
+  auto-downloaded on first run.
+- **Splits**: `oracle` (~2 evidence sessions/question, **n=78**) and `_s`
+  (~48 sessions, ~122k tokens/question). With `mode="train"` the environment
+  instead generates unlimited procedural supersession episodes for RL.
 
-On LongMemEval's `knowledge-update` questions, giving an agent bounded memory
-instead of full context drops supersession accuracy sharply — and the gap
-survives on the frontier model:
+### Task
+- **Type**: multi-turn, bounded-memory rollout. Each turn the agent rewrites its
+  capped notes from the current session; raw history is never re-fed. After the
+  final session it answers from memory alone. `full_context=True` exposes a
+  single-turn upper bound (all sessions in context).
+- **Parser**: last assistant message, scored by a programmatic answer matcher
+  (normalized variant match + token-overlap fallback) — no judge model required.
+- **Rubric overview**: `reward = answered_current` (weight 1.0): 1.0 iff the
+  final answer conveys the current/gold value. Procedural `train` tasks also ship
+  `stale_values` (the superseded answers), enabling a stale-answer penalty.
 
-| Model | Full-context | Bounded memory |
-| --- | --- | --- |
-| gpt-4.1-mini | 82% | 63% |
-| gpt-4.1 | 91% | 64% |
-| gpt-5.4 | 92% | **77%** |
-
-Even gpt-5.4 loses 15 points (paired McNemar p=0.0033) and fails ~23% of
-supersession questions under bounded memory, while full-context saturates near
-92%. The bottleneck is memory maintenance, not comprehension. (Details:
-`docs/findings/` in the repo.)
-
-## Usage
-
+### Quickstart
 ```bash
+# local dev
+uv run vf-eval supersede
+
+# via the Hub
 prime env install supersede
-# bounded memory (the failure regime)
 prime eval run supersede -m openai/gpt-4.1-mini -a '{"max_examples": 78}'
 # full-context upper bound (for the gap)
 prime eval run supersede -m openai/gpt-4.1-mini -a '{"full_context": true}'
 ```
 
-The environment auto-downloads the LongMemEval knowledge-update data
-(MIT license) on first run. Arguments to `load_environment`:
+The LongMemEval `knowledge-update` data downloads automatically on first run.
 
-| arg | default | meaning |
+### Environment Arguments
+| Arg | Type | Default | Description |
+| --- | --- | --- | --- |
+| `mode` | str | `"eval"` | `eval` (real LongMemEval) or `train` (procedural RL episodes) |
+| `question_type` | str | `"knowledge-update"` | LongMemEval subset (eval mode) |
+| `max_examples` | int \| None | `None` | cap on eval tasks |
+| `budget` | int | `300` | character cap on the agent's notes memory |
+| `full_context` | bool | `False` | upper-bound mode: all sessions in context, single turn |
+| `min_sessions` / `max_sessions` | int | `6` / `8` | session-count range (train mode) |
+
+### Metrics
+| Metric | Meaning |
+| --- | --- |
+| `reward` | aggregate reward = `answered_current` (weight 1.0) |
+| `answered_current` | 1.0 iff the final answer conveys the current/gold value |
+
+### Results
+**The gap — bounded memory breaks supersession, even at the frontier**
+(oracle, n=78):
+
+| Model | Full context | Bounded memory |
 | --- | --- | --- |
-| `question_type` | `knowledge-update` | LongMemEval subset |
-| `max_examples` | `None` | cap on tasks |
-| `budget` | `300` | character cap on the agent's notes memory (bounded mode) |
-| `full_context` | `False` | upper-bound mode: all sessions in context, single turn |
+| gpt-4.1-mini | 82% | 63% |
+| gpt-4.1 | 91% | 64% |
+| gpt-5.4 | 92% | **77%** |
 
-## Reward
+Even gpt-5.4 loses 15 points (paired McNemar *p* = 0.0033); the bottleneck is
+memory *maintenance*, not comprehension, and it closes with neither a bigger
+model nor a bigger memory.
+Repro: `prime eval run supersede -m openai/gpt-4.1-mini -a '{"max_examples": 78}'`
 
-- `answered_current` (+1): the final answer conveys the current/gold value
-  (programmatic, ungameable matcher; no API needed).
-- `stale_penalty` (-1): the answer asserts a known superseded value — active
-  only when the task ships `stale_values` (synthetic timelines; LongMemEval is
-  gold-only).
+**Training closes part of it** — Qwen2.5-3B trained on this environment with GRPO
+(`mode="train"`), evaluated on the *same, held-out* real questions
+(`mode="eval"`, oracle n=78):
 
-## Status
+| Checkpoint | Held-out accuracy |
+| --- | --- |
+| base (untrained) | 9.0% |
+| GRPO step 175 | **16.7%** |
 
-Validated end-to-end under `verifiers` 0.1.14 against OpenAI: all 78
-knowledge-update rollouts terminate cleanly and the environment reports
-**57.7%** accuracy for gpt-4.1-mini (programmatic matcher), consistent with the
-offline harness's 63% (LLM judge). The remaining step is the Hub push
-(`prime env push`, which authenticates under your Prime Intellect account).
+Trained on synthetic episodes, improving on real held-out conversations — a
+learned skill, not memorization. Full diagnosis, scale study, and paper in the
+[GitHub repo](https://github.com/Vrin-cloud/supersede).
+
+### Acknowledgements & Citation
+Built on [LongMemEval](https://github.com/xiaowu0162/LongMemEval) (Wu et al.) and
+[`verifiers`](https://github.com/willccbb/verifiers). Apache-2.0.
+
+```bibtex
+@misc{patel2026supersede,
+  title  = {Supersede: Diagnosing and Training Memory-Consistent Agents under Fact Supersession},
+  author = {Patel, Vedant},
+  year   = {2026},
+  note   = {Vrin. https://github.com/Vrin-cloud/supersede}
+}
+```
+
+## Evaluation Reports
+<!-- Keep this section intact so saved eval reports auto-render here. -->
