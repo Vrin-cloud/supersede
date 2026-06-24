@@ -97,7 +97,7 @@ Built on [LongMemEval](https://github.com/xiaowu0162/LongMemEval) (Wu et al.) an
 
 ```bibtex
 @misc{patel2026supersede,
-  title  = {Supersede: Diagnosing and Training Memory-Consistent Agents under Fact Supersession},
+  title  = {Supersede: Diagnosing and Training the Memory-Update Gap in LLM Agents},
   author = {Patel, Vedant},
   year   = {2026},
   note   = {Vrin. https://github.com/Vrin-cloud/supersede}

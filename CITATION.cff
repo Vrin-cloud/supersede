@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use Supersede, please cite it."
-title: "Supersede: Diagnosing and Training Memory-Consistent Agents under Fact Supersession"
+title: "Supersede: Diagnosing and Training the Memory-Update Gap in LLM Agents"
 authors:
   - family-names: Patel
     given-names: Vedant
