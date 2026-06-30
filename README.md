@@ -6,7 +6,7 @@
 
 by **Vedant Patel** · [vrin.cloud](https://vrin.cloud) · [vedant@vrin.cloud](mailto:vedant@vrin.cloud)
 
-[![Paper (PDF)](https://img.shields.io/badge/paper-PDF-b31b1b.svg)](https://www.vrin.cloud/supersede.pdf)
+[![arXiv](https://img.shields.io/badge/arXiv-2606.27472-b31b1b.svg)](https://arxiv.org/abs/2606.27472)
 [![Prime Intellect Hub](https://img.shields.io/badge/Prime%20Intellect-Environments%20Hub-6E56CF)](https://app.primeintellect.ai/dashboard/environments/vedant/supersede)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20837384.svg)](https://doi.org/10.5281/zenodo.20837384)
 [![CI](https://github.com/Vrin-cloud/supersede/actions/workflows/ci.yml/badge.svg)](https://github.com/Vrin-cloud/supersede/actions/workflows/ci.yml)
@@ -173,12 +173,14 @@ results, and reward refinements especially. See
 
 ```bibtex
 @misc{patel2026supersede,
-  title  = {Supersede: Diagnosing and Training the Memory-Update Gap in LLM Agents},
-  author = {Patel, Vedant},
-  year   = {2026},
-  doi    = {10.5281/zenodo.20837384},
-  url    = {https://doi.org/10.5281/zenodo.20837384},
-  note   = {Vrin. https://github.com/Vrin-cloud/supersede}
+  title         = {Supersede: Diagnosing and Training the Memory-Update Gap in LLM Agents},
+  author        = {Patel, Vedant},
+  year          = {2026},
+  eprint        = {2606.27472},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CL},
+  doi           = {10.5281/zenodo.20837384},
+  url           = {https://arxiv.org/abs/2606.27472}
 }
 ```
 
